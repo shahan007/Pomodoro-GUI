@@ -1,7 +1,7 @@
 # Pomodoro GUI
 
 #### Clone the repo
-
+`git clone https://github.com/shahan007/Pomodoro-GUI`
 
 #### Set up the environment
 `python -m venv venv`
