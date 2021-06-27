@@ -39,6 +39,10 @@ class MainFrame(ttk.Frame):
     def buttonFrame(self):
         return self.__buttonFrame
 
+    @property
+    def timerLabel(self):
+        return self.__timerLabel
+    
     def create_widgets(self):
         self.__headerFrame = HeaderFrame(self)  # add padding for frames
         self.__title = ttk.Label(self)
@@ -117,16 +121,20 @@ class ButtonFrame(ttk.Frame):
 
     def start_timer(self):
         timer = self.__container.timeHolder
-        minutes, seconds = map(lambda v: int(v), timer.get().split(':'))
-        if (minutes + seconds) != 0:
+        minutes, seconds = map(lambda v: int(v), timer.get().split(':'))   
+        total = minutes + seconds
+        if total != 0:
             if seconds > 0:
                 seconds -= 1
             else:
                 seconds = 59
                 minutes -= 1
             timer.set(value=f"{minutes:02d}:{seconds:02d}")
+            if total < 10:
+                self.__container.timerLabel.config(style="timeout.TLabel")
             self.__id = self.after(1000, self.start_timer)
         else:
+            self.__container.timerLabel.config(style="TLabel")
             self.__container.rotate_status()
             self.__id = self.after(1000, self.start_timer)
 

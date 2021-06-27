@@ -14,6 +14,7 @@ class RootWindow(tk.Tk):
         self.style = Style()
         self.style.master = self
         self.style.theme_use('journal')        
+        self.style.configure("timeout.TLabel",foreground='red')
         self.style.map("pause.TButton",
                        foreground = [('hover','red')],
                        background = [('hover','white')])        
