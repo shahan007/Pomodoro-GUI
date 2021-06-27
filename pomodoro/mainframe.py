@@ -64,15 +64,14 @@ class MainFrame(ttk.Frame):
         self.__timeHolder.set(
             value=self.__pomodoroMapping[self.__currentStatus][0])
 
-
 class HeaderFrame(ttk.Frame):
 
     def __init__(self, container):
-        super().__init__(container)
+        super().__init__(container)        
         self.__container = container
         self.columnconfigure((0,1,2), weight=1)
         self.rowconfigure(0, weight=1)
-        self.config(style='me.TFrame')
+        self.config(style='extreme.TFrame')
         self.create_widgets()
         self.place_widgets()
 
@@ -98,7 +97,7 @@ class ButtonFrame(ttk.Frame):
         self.__container = container
         self.columnconfigure((0, 1, 2), weight=1)
         self.rowconfigure(0, weight=1)
-        self.config(style='me.TFrame')
+        self.config(style='extreme.TFrame')
         self.create_widgets()
         self.place_widgets()
         self.__id = None
