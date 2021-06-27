@@ -9,11 +9,11 @@ class SettingFrame(ttk.Frame):
         self.columnconfigure((0,1,2),weight=1)        
         self.rowconfigure((0,5),weight=3)
         self.rowconfigure((1,2,3),weight=2)
-        self.rowconfigure(3,weight=1)
+        self.rowconfigure(4,weight=1)
         self.__newMappingHolder = {}
-        self.__fromToMapping    = {0:[(3,60),(0,55)],
-                                   1:[(0,5),(30,55)],
-                                   2:[(2,15),(0,55)]}
+        self.__fromToMapping    = {0:[(25,59),(0,55)],
+                                   1:[(0,5),(0,55)],
+                                   2:[(6,19),(0,55)]}
         
         self.create_widgets()
         self.place_widgets()
@@ -24,25 +24,36 @@ class SettingFrame(ttk.Frame):
             minHolder = tk.StringVar(self,value=int(v[0].split(':')[0]))     
             secHolder = tk.StringVar(self, value=int(v[0].split(':')[1]))            
             self.__newMappingHolder[k] = [minHolder,secHolder]       
-            ttk.Label(self,text=v[1]).grid(row=k+1,column=0)
+            ttk.Label(self, text=v[1],width=10).grid(row=k+1, column=0)
             ttk.Spinbox(
-                self, from_=self.__fromToMapping[k][0][0],
+                self, from_=self.__fromToMapping[k][0][0],width=10,justify='center',
                 to_=self.__fromToMapping[k][0][1],textvariable=minHolder,
                 increment=1,state='readonly').grid(row=k+1, column=1)
-            tk.Spinbox(
-                self, from_=self.__fromToMapping[k][1][0],
+            ttk.Spinbox(
+                self, from_=self.__fromToMapping[k][1][0], width=10, justify='center',
                 to_=self.__fromToMapping[k][1][1], textvariable=secHolder,
                 increment=5, state='readonly').grid(row=k+1, column=2)
                                                 
-        self.__confirmBtn= ttk.Button(self,text='Confirm',
-                                      command=self.confirm)
+        self.__buttonFrame= ttk.Frame(self)
+        self.__buttonFrame.columnconfigure((0,1),weight=1)        
+        self.__buttonFrame.rowconfigure(0,weight=1)
+        self.__confirmBtn= ttk.Button(
+            self.__buttonFrame,
+            text='Confirm',
+            width=10,
+            command=self.confirm)
         self.__gobackBtn = ttk.Button(
-            self, text='<- Go back', command=self.go_back)
+            self.__buttonFrame,
+            text='<- Go back',
+            width=10,
+            command=self.go_back
+            )
 
     def place_widgets(self):
         self.__title.grid(row=0,column=0,columnspan=3)
-        self.__gobackBtn.grid(row=4, column=0)
-        self.__confirmBtn.grid(row=4, column=2)
+        self.__buttonFrame.grid(row=4,column=0,columnspan=3,sticky='EW',pady=(10,0))
+        self.__gobackBtn.grid(row=0, column=0,sticky='E',padx=(0,5))
+        self.__confirmBtn.grid(row=0, column=1, sticky='W', padx=(5, 0))
 
     def confirm(self):
         for k,v in self.__newMappingHolder.items():
@@ -53,6 +64,5 @@ class SettingFrame(ttk.Frame):
             
     def go_back(self):
         self.__container.title('Pomodoro')
-        self.__container.geometry('250x250')
-        self.__container.resizable(True,True)
+        self.__container.geometry('250x250')            
         self.__container.switch_frames(self.__container.mainFrame)

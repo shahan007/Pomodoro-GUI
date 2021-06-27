@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from ttkbootstrap import Style
 from pomodoro.mainframe import MainFrame
 from pomodoro.settingsframe import SettingFrame
 
@@ -9,10 +10,10 @@ class RootWindow(tk.Tk):
         super().__init__()
         self.title('Pomodoro')
         self.geometry('250x250')
-        self.style = ttk.Style(self)                
-        self.style.theme_use('clam')
-        self.style.configure('me.TFrame', bordercolor='red',
-                             borderwidth=20, relief='ridge')
+        self.resizable(False,False)
+        self.style = Style()
+        self.style.master = self
+        self.style.theme_use('minty')
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
 

@@ -12,8 +12,8 @@ class MainFrame(ttk.Frame):
         
         self.__pomodoro = [0, 1, 0, 2]
         self.__pomodoroMapping = {0:['25:00','Pomodoro'],
-                                  1: ['03:30', 'Short Break'],
-                                  2:['10:30','Long Break']}
+                                  1: ['05:00', 'Short Break'],
+                                  2:['15:00','Long Break']}
         self.__index = -1
         self.__currentStatus = None
         self.create_widgets()
@@ -66,17 +66,17 @@ class HeaderFrame(ttk.Frame):
     def __init__(self, container):
         super().__init__(container)
         self.__container = container
-        self.columnconfigure(1, weight=1)
+        self.columnconfigure((0,1,2), weight=1)
         self.rowconfigure(0, weight=1)
         self.config(style='me.TFrame')
-
         self.create_widgets()
         self.place_widgets()
 
     def create_widgets(self):
         self.__title = ttk.Label(self, text='Pomodoro Timer !')
-        self.__settingBtn = ttk.Button(self, text='Setting',
-                                       command=self.update_settings)
+        self.__settingBtn = ttk.Button(
+            self, text='Setting',width=6,
+            command=self.update_settings)
 
     def place_widgets(self):
         self.__title.grid(row=0, column=0)
@@ -84,10 +84,8 @@ class HeaderFrame(ttk.Frame):
 
     def update_settings(self):
         self.__container.root.title('Settings')
-        self.__container.root.geometry('400x300')
-        self.__container.root.resizable(False,False)
+        self.__container.root.geometry('350x350')        
         self.__container.root.switch_frames(self.__container.root.settingFrame)
-
 
 class ButtonFrame(ttk.Frame):
 
@@ -102,12 +100,15 @@ class ButtonFrame(ttk.Frame):
         self.__id = None
 
     def create_widgets(self):
-        self.__startBtn = ttk.Button(self, text='Start',
-                                     command=self.start_timer)
+        self.__startBtn = ttk.Button(
+            self, text='Start', width=6,
+            command=self.start_timer)
         self.__pauseBtn = ttk.Button(
-            self, text='Pause', command=self.pause_timer)
-        self.__resetBtn = ttk.Button(self, text='Reset',
-                                     command=self.reset_timer)
+            self, text='Pause',width=6,
+            command=self.pause_timer)
+        self.__resetBtn = ttk.Button(
+            self, text='Reset', width=6,
+            command=self.reset_timer)
 
     def place_widgets(self):
         self.__startBtn.grid(row=0, column=0, sticky='E')
@@ -130,7 +131,8 @@ class ButtonFrame(ttk.Frame):
             self.__id = self.after(1000, self.start_timer)
 
     def pause_timer(self):
-        self.after_cancel(self.__id)
+        if self.__id:
+            self.after_cancel(self.__id)
 
     def reset_timer(self):
         if self.__id:
