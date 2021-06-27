@@ -10,17 +10,11 @@ class RootWindow(tk.Tk):
         super().__init__()
         self.title('Pomodoro')
         self.geometry('250x250')
-        self.resizable(False,False)
-        self.style = Style()
-        self.style.master = self
-        self.style.theme_use('journal')        
-        self.style.configure("timeout.TLabel",foreground='red')
-        self.style.map("pause.TButton",
-                       foreground = [('hover','red')],
-                       background = [('hover','white')])        
+        self.resizable(False,False)        
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
 
+        self.create_styling()
         self.create_frames()
         self.place_frames()
 
@@ -42,6 +36,15 @@ class RootWindow(tk.Tk):
         self.__settingFrame.grid(row=0, column=0, sticky='NSEW')
         self.__mainFrame.tkraise()
 
+    def create_styling(self):
+        self.style = Style()
+        self.style.master = self
+        self.style.theme_use('journal')
+        self.style.configure("timeout.TLabel", foreground='red')
+        self.style.map("pause.TButton",
+                       foreground=[('hover', 'red')],
+                       background=[('hover', 'white')])
+        
     def switch_frames(self, frame):
         frame.tkraise()
 
