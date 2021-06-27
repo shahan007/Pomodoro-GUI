@@ -13,7 +13,10 @@ class RootWindow(tk.Tk):
         self.resizable(False,False)
         self.style = Style()
         self.style.master = self
-        self.style.theme_use('minty')
+        self.style.theme_use('journal')        
+        self.style.map("pause.TButton",
+                       foreground = [('hover','red')],
+                       background = [('hover','white')])        
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
 

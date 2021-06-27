@@ -104,7 +104,7 @@ class ButtonFrame(ttk.Frame):
             self, text='Start', width=6,
             command=self.start_timer)
         self.__pauseBtn = ttk.Button(
-            self, text='Pause',width=6,
+            self, text='Pause', width=6, style='pause.TButton',
             command=self.pause_timer)
         self.__resetBtn = ttk.Button(
             self, text='Reset', width=6,
