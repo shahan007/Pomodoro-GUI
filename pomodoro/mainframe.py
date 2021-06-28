@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+from PIL import Image, ImageTk
+import os
 
 class MainFrame(ttk.Frame):
 
@@ -44,7 +46,7 @@ class MainFrame(ttk.Frame):
         return self.__timerLabel
     
     def create_widgets(self):
-        self.__headerFrame = HeaderFrame(self)  # add padding for frames
+        self.__headerFrame = HeaderFrame(self)  
         self.__title = ttk.Label(self)
         self.__timeHolder = tk.StringVar(self)
         self.__timerLabel = ttk.Label(self, textvariable=self.__timeHolder)
@@ -69,19 +71,25 @@ class HeaderFrame(ttk.Frame):
     def __init__(self, container):
         super().__init__(container)        
         self.__container = container
-        self.columnconfigure((0,1,2), weight=1)
-        self.rowconfigure(0, weight=1)
-        self.config(style='extreme.TFrame')
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)                
         self.create_widgets()
         self.place_widgets()
 
     def create_widgets(self):
-        self.__title = ttk.Label(self, text='Pomodoro Timer !')
+        self.__label = ttk.Label(self, borderwidth=0)
+        self.__label.columnconfigure((0, 1, 2), weight=1)
+        self.__label.rowconfigure(0, weight=1)
+        with Image.open(os.path.join(os.path.dirname(__file__), r'src/frame.jpg')) as image:            
+            self.__photo = ImageTk.PhotoImage(image.resize((250, 100), Image.ANTIALIAS))
+        self.__label.config(image=self.__photo)        
+        self.__title = ttk.Label(self.__label, text='Pomodoro Timer !')
         self.__settingBtn = ttk.Button(
-            self, text='Setting',width=6,
+            self.__label, text='Setting', width=6,
             command=self.update_settings)
 
     def place_widgets(self):
+        self.__label.grid(row=0,column=0,sticky='NSEW')                
         self.__title.grid(row=0, column=0)
         self.__settingBtn.grid(row=0, column=2)
 
@@ -95,25 +103,33 @@ class ButtonFrame(ttk.Frame):
     def __init__(self, container):
         super().__init__(container)
         self.__container = container
-        self.columnconfigure((0, 1, 2), weight=1)
+        self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
-        self.config(style='extreme.TFrame')
+
         self.create_widgets()
         self.place_widgets()
         self.__id = None
 
     def create_widgets(self):
+        self.__label = ttk.Label(self, borderwidth=0)
+        self.__label.columnconfigure((0, 1, 2), weight=1)
+        self.__label.rowconfigure(0, weight=1)
+        with Image.open(os.path.join(os.path.dirname(__file__), r'src/frame.jpg')) as image:
+            self.__photo = ImageTk.PhotoImage(
+                image.resize((250, 100), Image.ANTIALIAS))
+        self.__label.config(image=self.__photo)
         self.__startBtn = ttk.Button(
-            self, text='Start', width=6,
+            self.__label, text='Start', width=6,
             command=self.start_timer)
         self.__pauseBtn = ttk.Button(
-            self, text='Pause', width=6, style='pause.TButton',
+            self.__label, text='Pause', width=6, style='pause.TButton',
             command=self.pause_timer)
         self.__resetBtn = ttk.Button(
-            self, text='Reset', width=6,
+            self.__label, text='Reset', width=6,
             command=self.reset_timer)
 
     def place_widgets(self):
+        self.__label.grid(row=0, column=0, sticky='NSEW')
         self.__startBtn.grid(row=0, column=0, sticky='E')
         self.__pauseBtn.grid(row=0, column=1)
         self.__resetBtn.grid(row=0, column=2, sticky='W')
@@ -129,7 +145,7 @@ class ButtonFrame(ttk.Frame):
                 seconds = 59
                 minutes -= 1
             timer.set(value=f"{minutes:02d}:{seconds:02d}")
-            if total < 10:
+            if total < 11:
                 self.__container.timerLabel.config(style="timeout.TLabel")
             self.__id = self.after(1000, self.start_timer)
         else:

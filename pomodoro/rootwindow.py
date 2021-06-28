@@ -13,7 +13,6 @@ class RootWindow(tk.Tk):
         self.resizable(False,False)        
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
-
         self.create_styling()
         self.create_frames()
         self.place_frames()
@@ -40,8 +39,7 @@ class RootWindow(tk.Tk):
         self.style = Style()
         self.style.master = self
         self.style.theme_use('journal')
-        self.style.configure("timeout.TLabel", foreground='red')
-        self.style.configure("extreme.TFrame",background='black')
+        self.style.configure("timeout.TLabel", foreground='red')        
         self.style.map("pause.TButton",
                        foreground=[('hover', 'red')],
                        background=[('hover', 'white')])
