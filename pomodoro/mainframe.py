@@ -1,7 +1,6 @@
 import os
 import tkinter as tk
 from tkinter import ttk
-from PIL import Image, ImageTk
 from playsound import playsound
 
 class MainFrame(ttk.Frame):
@@ -20,6 +19,7 @@ class MainFrame(ttk.Frame):
         self.__index = -1
         self.__currentStatus = None
         self.__timerStyle = True
+        self.__backgroundPhoto = self.__container.create_photo(250,100,'frame.jpg')        
         self.create_widgets()
         self.place_widgets()
         self.rotate_status()
@@ -39,6 +39,10 @@ class MainFrame(ttk.Frame):
     @timerStyle.setter
     def timerStyle(self,newValue):
         self.__timerStyle = newValue
+    
+    @property
+    def backgroundPhoto(self):
+        return self.__backgroundPhoto
     
     def reset_index(self):
         self.__index = -1
@@ -77,7 +81,7 @@ class MainFrame(ttk.Frame):
             text=f'{self.__pomodoroMapping[self.__currentStatus][1]}')
         self.__timeHolder.set(
             value=self.__pomodoroMapping[self.__currentStatus][0])
-
+    
 class HeaderFrame(ttk.Frame):
 
     def __init__(self, container):
@@ -87,17 +91,22 @@ class HeaderFrame(ttk.Frame):
         self.rowconfigure(0, weight=1)                
         self.create_widgets()
         self.place_widgets()
-
-    def create_widgets(self):
-        self.__label = ttk.Label(self, borderwidth=0)
+    
+    def create_widgets(self):          
+        self.__label = ttk.Label(
+            self,
+            borderwidth=0,
+            image=self.__container.backgroundPhoto)        
         self.__label.columnconfigure((0, 1, 2), weight=1)
         self.__label.rowconfigure(0, weight=1)
-        with Image.open(os.path.join(os.path.dirname(__file__), r'src/frame.jpg')) as image:            
-            self.__photo = ImageTk.PhotoImage(image.resize((250, 100), Image.ANTIALIAS))
-        self.__label.config(image=self.__photo)        
         self.__title = ttk.Label(self.__label, text='Pomodoro Timer !')
+        self.__settingPhoto = self.__container.root.create_photo(18, 18, 'settings.png')
         self.__settingBtn = ttk.Button(
-            self.__label, text='Setting', width=6,
+            self.__label,
+            text='Setting',
+            width=6,
+            image=self.__settingPhoto,
+            compound='right',
             command=self.update_settings)
 
     def place_widgets(self):
@@ -122,13 +131,12 @@ class ButtonFrame(ttk.Frame):
         self.__id = None
 
     def create_widgets(self):
-        self.__label = ttk.Label(self, borderwidth=0)
+        self.__label = ttk.Label(
+            self,
+            borderwidth=0,
+            image=self.__container.backgroundPhoto)
         self.__label.columnconfigure((0, 1, 2), weight=1)
-        self.__label.rowconfigure(0, weight=1)
-        with Image.open(os.path.join(os.path.dirname(__file__), r'src/frame.jpg')) as image:
-            self.__photo = ImageTk.PhotoImage(
-                image.resize((250, 100), Image.ANTIALIAS))
-        self.__label.config(image=self.__photo)
+        self.__label.rowconfigure(0, weight=1)        
         self.__startBtn = ttk.Button(
             self.__label, text='Start', width=6,
             command=self.start_timer)
