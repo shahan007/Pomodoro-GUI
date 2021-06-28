@@ -1,8 +1,6 @@
 # Pomodoro GUI
-Beat procrastination and improve your focus one pomodoro at a time
-<br>
-<br>
-<br>
+Beat procrastination and improve your focus one pomodoro at a time<br><br>
+
 #### Clone the repo
 `git clone https://github.com/shahan007/Pomodoro-GUI`
 
@@ -15,4 +13,6 @@ Beat procrastination and improve your focus one pomodoro at a time
 
 #### Start the game
 `python run.py`
+
+<br><br>
 *(audio from [mixkit](https://mixkit.co/))*
