@@ -1,7 +1,8 @@
+import os
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
-import os
+from playsound import playsound
 
 class MainFrame(ttk.Frame):
 
@@ -13,11 +14,12 @@ class MainFrame(ttk.Frame):
         self.columnconfigure((0, 1), weight=1)
         
         self.__pomodoro = [0, 1, 0, 2]
-        self.__pomodoroMapping = {0:['25:00','Pomodoro'],
-                                  1: ['05:00', 'Short Break'],
-                                  2:['15:00','Long Break']}
+        self.__pomodoroMapping = {0:['00:15','Pomodoro'],
+                                  1: ['00:05', 'Short Break'],
+                                  2:['00:12','Long Break']}
         self.__index = -1
         self.__currentStatus = None
+        self.__timerStyle = True
         self.create_widgets()
         self.place_widgets()
         self.rotate_status()
@@ -30,6 +32,14 @@ class MainFrame(ttk.Frame):
     def timeHolder(self):
         return self.__timeHolder
 
+    @property
+    def timerStyle(self):
+        return self.__timerStyle
+    
+    @timerStyle.setter
+    def timerStyle(self,newValue):
+        self.__timerStyle = newValue
+    
     def reset_index(self):
         self.__index = -1
 
@@ -60,6 +70,8 @@ class MainFrame(ttk.Frame):
 
     def rotate_status(self):
         self.__index = (self.__index + 1) % len(self.__pomodoro)
+        self.__timerLabel.config(style="TLabel")
+        self.__timerStyle = True
         self.__currentStatus = self.__pomodoro[self.__index]
         self.__title.config(
             text=f'{self.__pomodoroMapping[self.__currentStatus][1]}')
@@ -104,8 +116,7 @@ class ButtonFrame(ttk.Frame):
         super().__init__(container)
         self.__container = container
         self.columnconfigure(0, weight=1)
-        self.rowconfigure(0, weight=1)
-
+        self.rowconfigure(0, weight=1)     
         self.create_widgets()
         self.place_widgets()
         self.__id = None
@@ -144,15 +155,20 @@ class ButtonFrame(ttk.Frame):
             else:
                 seconds = 59
                 minutes -= 1
-            timer.set(value=f"{minutes:02d}:{seconds:02d}")
-            if total < 11:
-                self.__container.timerLabel.config(style="timeout.TLabel")
-            self.__id = self.after(1000, self.start_timer)
-        else:
-            self.__container.timerLabel.config(style="TLabel")
+            timer.set(value=f"{minutes:02d}:{seconds:02d}")            
+            if  total < 11:
+                if self.__container.timerStyle:
+                    self.__container.timerLabel.config(style="timeout.TLabel")
+                    self.__container.timerStyle = False        
+                self.after(1, self.play_sound)
+            self.__id = self.after(999, self.start_timer)
+        else:                        
             self.__container.rotate_status()
-            self.__id = self.after(1000, self.start_timer)
+            self.__id = self.after(999, self.start_timer)
 
+    def play_sound(self):
+        playsound(os.path.join(os.path.dirname(__file__), r'src/countsound.wav'))
+        
     def pause_timer(self):
         if self.__id:
             self.after_cancel(self.__id)
