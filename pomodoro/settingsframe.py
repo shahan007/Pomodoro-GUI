@@ -1,5 +1,4 @@
 from tkinter import ttk
-from tkinter.font import Font
 import tkinter as tk
 
 class SettingFrame(ttk.Frame):
@@ -19,16 +18,14 @@ class SettingFrame(ttk.Frame):
         self.create_widgets()
         self.place_widgets()
 
-    def create_widgets(self):
-        self.__fontLabel = Font(name='Segoe UI Symbol', size=12, weight='bold')
-        self.__fontTitle = Font(name='Arial', size=14, weight='bold')
+    def create_widgets(self):                
         self.__settingPhoto = self.__container.create_photo(40, 40, 'settings.png')
         self.__title = ttk.Label(
             self,
             text='Welcome to Settings',
             image=self.__settingPhoto,
             compound = 'bottom',
-            font = self.__fontTitle)        
+            font='Arial 14 bold')
         for k,v in self.__container.mainFrame.pomodoroMapping.items():
             minHolder = tk.StringVar(self,value=int(v[0].split(':')[0]))     
             secHolder = tk.StringVar(self, value=int(v[0].split(':')[1]))            
@@ -36,7 +33,7 @@ class SettingFrame(ttk.Frame):
             ttk.Label(
                 self,
                 text=f"{v[1]}:",style='primary.TLabel',
-                font= self.__fontLabel,anchor='w'
+                font='SegoeUISymbol 12 bold', anchor='w'
                 ).grid(row=k+1, column=0)
             ttk.Spinbox(
                 self, from_=self.__fromToMapping[k][0][0],width=10,justify='center',

@@ -6,8 +6,8 @@ from playsound import playsound
 class MainFrame(ttk.Frame):
 
     def __init__(self, container):
-        super().__init__(container)
-        self.__container = container
+        super().__init__(container)        
+        self.__container = container        
         self.rowconfigure((0, 2), weight=1)
         self.rowconfigure(1, weight=2)
         self.columnconfigure((0, 1), weight=1)
@@ -61,9 +61,15 @@ class MainFrame(ttk.Frame):
     
     def create_widgets(self):
         self.__headerFrame = HeaderFrame(self)  
-        self.__title = ttk.Label(self)
+        self.__title = ttk.Label(self,
+                                 font='Didot 19 bold',
+                                 style='primary.TLabel')
         self.__timeHolder = tk.StringVar(self)
-        self.__timerLabel = ttk.Label(self, textvariable=self.__timeHolder)
+        self.__timerLabel = ttk.Label(
+            self,            
+            textvariable=self.__timeHolder,
+            font = "Courier 26 bold"
+            )
         self.__buttonFrame = ButtonFrame(self)
 
     def place_widgets(self):
@@ -92,14 +98,21 @@ class HeaderFrame(ttk.Frame):
         self.create_widgets()
         self.place_widgets()
     
-    def create_widgets(self):          
+    def create_widgets(self):            
         self.__label = ttk.Label(
             self,
             borderwidth=0,
             image=self.__container.backgroundPhoto)        
         self.__label.columnconfigure((0, 1, 2), weight=1)
         self.__label.rowconfigure(0, weight=1)
-        self.__title = ttk.Label(self.__label, text='Pomodoro Timer !')
+        self.__title = ttk.Label(
+            self.__label,
+            text='Pomodoro Timer !',
+            font= "Arial 11 bold",
+            background='#feb1bb',            
+            foreground='white'            
+            )            
+        
         self.__settingPhoto = self.__container.root.create_photo(18, 18, 'settings.png')
         self.__settingBtn = ttk.Button(
             self.__label,
@@ -111,7 +124,7 @@ class HeaderFrame(ttk.Frame):
 
     def place_widgets(self):
         self.__label.grid(row=0,column=0,sticky='NSEW')                
-        self.__title.grid(row=0, column=0)
+        self.__title.grid(row=0, column=0,pady=(3,0),sticky='W')
         self.__settingBtn.grid(row=0, column=2)
 
     def update_settings(self):

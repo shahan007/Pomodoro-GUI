@@ -37,7 +37,7 @@ class RootWindow(tk.Tk):
         self.__settingFrame.grid(row=0, column=0, sticky='NSEW')
         self.__mainFrame.tkraise()
 
-    def create_styling(self):
+    def create_styling(self):        
         self.style = Style()
         self.style.master = self
         self.style.theme_use('journal')
@@ -47,7 +47,7 @@ class RootWindow(tk.Tk):
             foreground=[('hover', self.style.lookup('TButton', 'background'))],
             background=[('hover', 'white')]
             )                
-        
+                       
     def switch_frames(self, frame):
         frame.tkraise()
 
