@@ -14,9 +14,9 @@ class MainFrame(ttk.Frame):
         self.columnconfigure((0, 1), weight=1)
         
         self.__pomodoro = [0, 1, 0, 2]
-        self.__pomodoroMapping = {0:['00:15','Pomodoro'],
-                                  1: ['00:05', 'Short Break'],
-                                  2:['00:12','Long Break']}
+        self.__pomodoroMapping = {0:['25:00','Pomodoro'],
+                                  1: ['05:00', 'Short Break'],
+                                  2:['15:00','Long Break']}
         self.__index = -1
         self.__currentStatus = None
         self.__timerStyle = True
