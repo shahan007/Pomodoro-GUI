@@ -1,6 +1,6 @@
 # Pomodoro GUI
 
-audio from [ mixkit !](https://mixkit.co/)
+audio from [mixkit](https://mixkit.co/)
 
 
 #### Clone the repo
