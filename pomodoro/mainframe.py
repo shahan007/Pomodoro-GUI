@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import ttk
+import threading
 from playsound import playsound
 
 class MainFrame(ttk.Frame):
@@ -68,7 +69,7 @@ class MainFrame(ttk.Frame):
         self.__timerLabel = ttk.Label(
             self,            
             textvariable=self.__timeHolder,
-            font = "Courier 26 bold"
+            font = "Courier 24 bold"
             )
         self.__buttonFrame = ButtonFrame(self)
 
@@ -180,8 +181,9 @@ class ButtonFrame(ttk.Frame):
             if  total < 11:
                 if self.__container.timerStyle:
                     self.__container.timerLabel.config(style="timeout.TLabel")
-                    self.__container.timerStyle = False        
-                self.after(1, self.play_sound)
+                    self.__container.timerStyle = False     
+                thread = threading.Thread(target=self.play_sound)   
+                thread.start()                
             self.__id = self.after(999, self.start_timer)
         else:                        
             self.__container.rotate_status()
