@@ -2,7 +2,7 @@
 Beat procrastination and improve your focus one pomodoro at a time<br><br>
 
 #### Clone the repo
-```console
+```bash
 git clone https://github.com/shahan007/Pomodoro-GUI
 ```
 
