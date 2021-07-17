@@ -1,9 +1,9 @@
 # Pomodoro GUI
 Beat procrastination and improve your focus one pomodoro at a time<br><br>
 
-### Built With
+## Built With
 - _Python version 3.8.0_
-- _(audio from [mixkit](https://mixkit.co/))_
+- _(audio from [mixkit](https://mixkit.co/))_ <br><br>
 
 ## How to run ?
 
