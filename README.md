@@ -1,6 +1,12 @@
 # Pomodoro GUI
 Beat procrastination and improve your focus one pomodoro at a time<br><br>
 
+### Built With
+- _Python version 3.8.0_
+- _(audio from [mixkit](https://mixkit.co/))_
+
+## How to run ?
+
 #### Clone the repo
 ```console
 $ git clone https://github.com/shahan007/Pomodoro-GUI
@@ -16,6 +22,3 @@ $ pip install -r requirements.txt
 ```console
 $ python run.py
 ```
-
-<br><br>
-*(audio from [mixkit](https://mixkit.co/))*
