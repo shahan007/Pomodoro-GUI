@@ -8,17 +8,17 @@ Beat procrastination and improve your focus one pomodoro at a time<br><br>
 ## How to run ?
 
 #### Clone the repo
-```console
+```bash
 $ git clone https://github.com/shahan007/Pomodoro-GUI
 ```
 
 #### Set up the environment
-```console
+```bash
 $ python -m venv venv
 $ source venv/Scripts/activate
-$ pip install -r requirements.txt
+(venv) $ pip install -r requirements.txt
 ```
 #### Start the game
-```console
-$ python run.py
+```bash
+(venv) $ python run.py
 ```
